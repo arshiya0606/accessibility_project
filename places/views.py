@@ -42,17 +42,7 @@ def add_place(request):
             has_accessible_toilet=body.get("has_accessible_toilet", False),
         )
 
-        # ✅ Save comment as review (no stars shown)
-        comment = body.get("comment", "").strip()
-
-        if comment:
-            Rating.objects.create(
-                place=place,
-                rating=int(body.get("rating",5)),   # fixed internal value
-                comment=comment
-        )
-
-        return JsonResponse({"message": "Place added"})
+        return JsonResponse({"message": "Place added", "id": place.id})
 
     return JsonResponse({"error": "Invalid request"})
 
@@ -73,8 +63,3 @@ def add_rating(request, place_id):
         return JsonResponse({"message": "Rating added"})
 
     return JsonResponse({"error": "Invalid request"})
-
-    
-
-    
-
